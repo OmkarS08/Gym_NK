@@ -1,6 +1,9 @@
 import Dashboard from "./components/Dashboard/Dashboard";
 import Login from "./components/Login/Login";
 import Members from "./components/Members/Members";
+import Notification from "./components/Notification/Notification";
+import AddMember from "./components/AddMember/AddMember";
+import Setting from "./components/Setting/Setting";
 import {BrowserRouter,Routes,Route} from 'react-router-dom' 
 
 function App() {
@@ -11,6 +14,9 @@ function App() {
           <Route path='/' element={<Login />}></Route>
           <Route path='/Dasboard' element={<Dashboard />}></Route>
           <Route path='/Members' element={<Members />}></Route>
+          <Route path = '/AddMember' element ={<AddMember/>}></Route>
+          <Route path = '/Notification' element ={<Notification/>}></Route>
+          <Route path = '/Setting' element ={<Setting/>}></Route>
         </Routes>
 
       </BrowserRouter>
