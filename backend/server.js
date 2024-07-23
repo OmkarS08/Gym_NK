@@ -22,6 +22,8 @@ function formatSql(query, values) {
     // Format the end date as a string (optional, adjust format as needed)
     return format(endDate, 'yyyy-MM-dd');
   }
+
+
 const db = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -49,15 +51,15 @@ app.post('/login',(req,res)=>{
 
 
 app.post('/AddMember',(req,res)=>{
-    const {name,age,package,startDate,gender} = req.body
+    const {name,age,package,startDate,gender,mobile} = req.body
     console.log('name:'+name,age,package,startDate,gender)
 
    
        const endDate = calculateEndDate(startDate,Number(package))
 
-    const sql = 'INSERT INTO `members` (`name`, `age`, `gender`, `mobile`, `package`, `startDate`, `endDate`, `status`) VALUES (?, ?, ?, ?, ?, ?, ?, NULL) '
+    const sql = 'INSERT INTO `members` (`name`, `age`, `gender`, `mobile`, `package`, `startDate`, `endDate`, `status`, `delete_flag`) VALUES (?, ?, ?, ?, ?, ?, ?, 0 , 0) '
     
-    db.query(sql,[name,age,gender,915623867,package,startDate,endDate],(err,data)=>{
+    db.query(sql,[name,age,gender,mobile,package,startDate,endDate],(err,data)=>{
         if(err){
             return res.json("Error");
         }
@@ -68,8 +70,26 @@ app.post('/AddMember',(req,res)=>{
     })
 })
 
+app.post('/deleteMember/:id', (req, res) => {
+    const id = req.params.id;
+  
+    const sql = `UPDATE members SET Delete_flag = '1' WHERE id =${id}`;
+    db.query(sql,(err,data)=>{
+        if(err){
+            return res.json("Error");
+        }
+       else {
+        return res.json(data);
+       }
+
+    })
+  });
+
+
 app.get('/getMemeber',(req,res)=>{
-    const sql = 'SELECT name ,age ,gender, `endDate` FROM members'
+    const sql = `SELECT id, name, age, gender, endDate 
+FROM members 
+WHERE Delete_flag != '1'`
     db.query(sql,(err,data)=>{
         if(err){
             return res.json("Error");
@@ -79,6 +99,28 @@ app.get('/getMemeber',(req,res)=>{
        }
     })
 })
+
+// app.get('/dashboardCount',(req,res)=>{
+
+    
+// const SQlCount = (N) =>{
+//     console.log(N)
+//     const SQL = `SELECT COUNT(${N}) FROM members`
+//     db.query(SQL,(err,data)=>{
+//         if(err){
+//             return res.json("Error");
+//         }
+//        else {
+//         return data
+//        }
+//     })
+// }
+//     const nameCount = SQlCount('name')
+    
+
+// })
+
+
 
 app.listen(8081, ()=>{
     console.log("listening");

@@ -1,11 +1,34 @@
 import React from 'react'
+import axios from 'axios';
 
-const TableBody = ({data}) => {
+const TableBody = ({ data }) => {
 
- console.log({data})
+
+  const handleDelete = (id, name) => {
+    const confirmLogout = window.confirm(`Are you sure want to delete ${name}`);
+    if (confirmLogout) {
+      // Navigate to the logout route or perform logout actions
+      axios.post(`http://localhost:8081/deleteMember/${id}`)
+        .then(res => {
+          if (res.status === 200) {
+            window.location.reload();
+
+          } else {
+            console.log('failed');
+          }
+        })
+        .catch(err => {
+          console.error('Error:', err); // Add error handling
+        });
+      console.log(`Deleting member with id: ${id}`); // Add console log
+
+    };
+  }
+
   return (
-    <> 
-    {!data || data.length === 0 ? (
+    <>
+
+      {!data || data.length === 0 ? (
         <tr>
           <td colSpan="6" className='text-center'>No Data Available</td>
         </tr>
@@ -25,7 +48,7 @@ const TableBody = ({data}) => {
               <button className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">
                 Edit
               </button>
-              <button className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
+              <button onClick={() => handleDelete(ele.id, ele.name)} className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
                 Delete
               </button>
             </td>

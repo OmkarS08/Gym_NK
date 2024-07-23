@@ -7,6 +7,7 @@ const MemberForm = () => {
     const [formData, setFormData] = useState({
       name: '',
       age: '',
+      mobile:'',
       gender: '',
       package: '',
       startDate: ''
@@ -40,7 +41,7 @@ const MemberForm = () => {
   
     return (
       <div className="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
-        <h2 className="text-2xl font-medium mb-4">Survey</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-center">Add Member</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name:</label>
@@ -65,6 +66,19 @@ const MemberForm = () => {
             />
           </div>
           <div className="mb-4">
+            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Mobile:</label>
+            <input
+              type="tel"
+              id="mobile"
+              name="mobile"
+              value={formData.mobile}
+              onChange={handleChange}
+              className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+              pattern="(\+91[\-\s]?)?[0]?(91)?[789]\d{9}" 
+              required
+            />
+          </div>
+          <div className="mb-4">
             <label htmlFor="gender" className="block text-gray-700 font-medium mb-2">Gender:</label>
             <select
               id="gender"
@@ -76,7 +90,6 @@ const MemberForm = () => {
               <option value="">Select gender</option>
               <option value="male">Male</option>
               <option value="female">Female</option>
-              <option value="other">Other</option>
             </select>
           </div>
           <div className="mb-4">

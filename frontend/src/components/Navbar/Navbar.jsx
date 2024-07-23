@@ -4,7 +4,18 @@ import { useNavigate } from 'react-router-dom'
 const Navbar = () => {
     const navigate = useNavigate()
     const handleClick = (event) => {
-          navigate(`/${event.target.name}`)
+    
+        if (event.target.name === '') {
+            const confirmLogout = window.confirm('Are you sure you want to logout?');
+            if (confirmLogout) {
+              // Navigate to the logout route or perform logout actions
+              navigate('/');
+            }
+          }
+        else{
+            navigate(`/${event.target.name}`)
+        }  
+       
     }
 
     return (

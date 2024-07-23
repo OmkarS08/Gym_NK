@@ -1,7 +1,27 @@
 import React from 'react'
 import DashboardCompo from '../DashboardCompo/DashboardCompo'
 import Navbar from '../Navbar/Navbar'
+import axios from 'axios'
+import { useState,useEffect } from 'react'
 const Dashboard = () => {
+
+  const [data,setData] =useState()
+
+  useEffect(()=>{
+    axios.get('http://localhost:8081/dashboardCount')
+    .then(res => {
+        if (res.status === 200) {
+            setData(res.data)
+            console.log('pass')
+            console.log(res)
+        }
+        else {
+            console.log(res.status)
+        }
+    })
+    .catch(err => console.log(err))
+},[])
+
 
   return (
     <div className="flex h-screen bg-gray-100">

@@ -10,7 +10,8 @@ const Notification = () => {
         </div>
       </div>
       <div className="p-4">
-        Notification
+          Members Packages expiring with one week
+          Members package expiring today
       </div>
     </div>
 

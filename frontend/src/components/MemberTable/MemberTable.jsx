@@ -35,7 +35,7 @@ const MemberTable = () => {
     </thead>
     <tbody className="bg-white divide-y divide-gray-200">
 
-    {!data ?"No data": <TableBody data = {data}/> }
+    {!data ?"No data": <TableBody data = {data}  setData ={setData}/> }
 
     </tbody>
 </table>
