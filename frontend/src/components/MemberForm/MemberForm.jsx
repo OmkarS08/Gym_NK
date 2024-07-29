@@ -29,6 +29,7 @@ const MemberForm = () => {
             .then(res => {
                 if (res.data === "Success") {
                     console.log(res)
+                    localStorage.setItem('showSuccessAlert', 'true'); 
                     navigate('/Members')
                 }
                 
@@ -40,7 +41,7 @@ const MemberForm = () => {
     };
   
     return (
-      <div className="bg-white border rounded-lg px-8 py-6 mx-auto my-8 max-w-2xl">
+      <div className="bg-white border rounded-lg px-8 py-5 mx-auto my-8 max-w-2xl">
         <h2 className="text-2xl font-semibold mb-4 text-center">Add Member</h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

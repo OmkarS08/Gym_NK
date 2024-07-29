@@ -1,16 +1,24 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import Swal from 'sweetalert2'
 const Navbar = () => {
     const navigate = useNavigate()
     const handleClick = (event) => {
     
         if (event.target.name === '') {
-            const confirmLogout = window.confirm('Are you sure you want to logout?');
-            if (confirmLogout) {
-              // Navigate to the logout route or perform logout actions
-              navigate('/');
-            }
+            Swal.fire({
+                title: "Are you sure want to Logout?",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#d33",
+                cancelButtonColor: "#3085d6",
+                confirmButtonText: "Yes,Logout"
+              }).then((result) => {
+                if (result.isConfirmed) {
+                    navigate('/');
+                }
+              });
           }
         else{
             navigate(`/${event.target.name}`)

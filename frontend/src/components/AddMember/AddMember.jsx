@@ -1,9 +1,9 @@
 import React from 'react'
 import Navbar from '../Navbar/Navbar'
 import MemberForm from '../MemberForm/MemberForm'
+
 const AddMember = () => {
 
-  
   return (
     <div className="flex h-screen bg-gray-100">
     <Navbar/>

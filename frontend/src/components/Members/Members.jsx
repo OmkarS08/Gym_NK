@@ -1,7 +1,24 @@
 import React from 'react'
 import Navbar from '../Navbar/Navbar'
 import MemberTable from '../MemberTable/MemberTable'
+import Swal from 'sweetalert2'
+import { useEffect } from 'react'
 const Members = () => {
+  useEffect(() => {
+    const showSuccessAlert = localStorage.getItem('showSuccessAlert');
+    if (showSuccessAlert === 'true') {
+      Swal.fire({
+        toast:true,
+        position: "top-end",
+        icon: "success",
+        title: "New Member has been added",
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar:"True"
+      });
+      localStorage.removeItem('showSuccessAlert');  // Remove flag
+    }
+  }, []);
   return (
     <div className="flex h-screen bg-gray-100">
     <Navbar/>

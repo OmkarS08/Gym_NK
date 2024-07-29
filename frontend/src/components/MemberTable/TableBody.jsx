@@ -1,28 +1,60 @@
 import React from 'react'
 import axios from 'axios';
 
+import Swal from 'sweetalert2'
+
 const TableBody = ({ data }) => {
 
 
   const handleDelete = (id, name) => {
-    const confirmLogout = window.confirm(`Are you sure want to delete ${name}`);
-    if (confirmLogout) {
-      // Navigate to the logout route or perform logout actions
-      axios.post(`http://localhost:8081/deleteMember/${id}`)
-        .then(res => {
-          if (res.status === 200) {
-            window.location.reload();
 
-          } else {
-            console.log('failed');
-          }
-        })
-        .catch(err => {
-          console.error('Error:', err); // Add error handling
-        });
-      console.log(`Deleting member with id: ${id}`); // Add console log
+    Swal.fire({
+      title: `Are you sure want to delete ${name}?`,
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!"
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.post(`http://localhost:8081/deleteMember/${id}`)
+          .then(res => {
+            if (res.status === 200) {
+              Swal.fire({
+                toast:true,
+                position:'top-end',
+                title: "Deleted!",
+                text: `${name} has been deleted.`,
+                icon: "error",
+                timer: 1500,
+                timerProgressBar: true,
+                showConfirmButton: false,
+              });
+              
+              const myreload = ()=>{
+                window.location.reload()
+              }
 
-    };
+              setTimeout(myreload,1590)
+
+            } else {
+              console.log('failed');
+            }
+          })
+          .catch(err => {
+            console.error('Error:', err); // Add error handling
+          });
+        console.log(`Deleting member with id: ${id}`); // Add console log
+  
+      }
+    });
+
+
+    // Navigate to the logout route or perform logout actions
+
+
+
   }
 
   return (
