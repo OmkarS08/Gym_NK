@@ -7,7 +7,7 @@ const MemberTable = () => {
     const [data,setData]=useState([]);
 
     useEffect(()=>{
-        axios.get('http://localhost:8081/getMemeber')
+        axios.get('http://localhost:8081/members/getMember')
         .then(res => {
             if (res.status === 200) {
                 setData(res.data)

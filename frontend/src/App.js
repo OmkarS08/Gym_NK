@@ -16,6 +16,7 @@ function App() {
           <Route path='/Members' element={<Members />}></Route>
           <Route path = '/AddMember' element ={<AddMember/>}></Route>
           <Route path = '/Notification' element ={<Notification/>}></Route>
+          <Route path = '/ActivityLogs' element ={<Setting/>}></Route>
           <Route path = '/Setting' element ={<Setting/>}></Route>
         </Routes>
 

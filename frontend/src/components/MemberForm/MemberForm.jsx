@@ -25,7 +25,7 @@ const MemberForm = () => {
       event.preventDefault();
       // handle form submission
       console.log(formData);
-      axios.post('http://localhost:8081/AddMember', formData)
+      axios.post('http://localhost:8081/members/AddMember', formData)
             .then(res => {
                 if (res.data === "Success") {
                     console.log(res)

@@ -56,6 +56,15 @@ const Navbar = () => {
                     >
                         Notification
                     </a>
+              
+                    <a
+                        href="#"
+                        className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700"
+                        name='ActivityLogs'
+                        onClick={handleClick}
+                    >
+                        Activity Logs
+                    </a>
                     <a
                         href="#"
                         className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700"

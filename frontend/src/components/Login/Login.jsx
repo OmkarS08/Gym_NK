@@ -20,7 +20,7 @@ const Login = () => {
     const handleSubmit = (event) => {
        
         console.log('submit');
-        axios.post('http://localhost:8081/login', values)
+        axios.post('http://localhost:8081/auth/login', values)
             .then(res => {
                 if (res.data === "Success") {
                     navigate('/Dasboard');

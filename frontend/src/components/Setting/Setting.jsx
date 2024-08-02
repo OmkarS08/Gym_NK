@@ -10,7 +10,11 @@ const Setting = () => {
         </div>
       </div>
       <div className="p-4">
-        Edit Package
+         <ul>
+          <li >Payment toggle</li>
+          <li>change fees strucutre</li>
+          <li>Change in password</li>
+         </ul>
       </div>
     </div>
 
