@@ -10,7 +10,8 @@ const MemberForm = () => {
       mobile:'',
       gender: '',
       package: '',
-      startDate: ''
+      startDate: '',
+      payment:''
     });
   const navigate = useNavigate()
     const handleChange = (e) => {
@@ -75,7 +76,7 @@ const MemberForm = () => {
               value={formData.mobile}
               onChange={handleChange}
               className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
-              pattern="(\+91[\-\s]?)?[0]?(91)?[789]\d{9}" 
+              // pattern="(\+91[\-\s]?)?[0]?(91)?[789]\d{9}" 
               required
             />
           </div>
@@ -164,6 +165,20 @@ const MemberForm = () => {
               onChange={handleChange}
               className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
             />
+          </div>
+          <div className="mb-4">
+            <label htmlFor="payment" className="block text-gray-700 font-medium mb-2">Payment:</label>
+            <select
+              id="payment"
+              name="payment"
+              value={formData.payment}
+              onChange={handleChange}
+              className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+            >
+              <option value="">Select Payment Method</option>
+              <option value="Cash">Cash</option>
+              <option value="UPI">UPI</option>
+            </select>
           </div>
           <div className="p-10 text-center">
             <button type="submit" className="bg-blue-500 text-white h-200 px-12 py-4 rounded-full hover:bg-blue-600">Submit</button>

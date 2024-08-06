@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 
 const Login = () => {
 
@@ -23,7 +24,11 @@ const Login = () => {
         axios.post('http://localhost:8081/auth/login', values)
             .then(res => {
                 if (res.data === "Success") {
+                    console.log(res.data);
                     navigate('/Dasboard');
+                    localStorage.setItem('loginAlert', 'true');
+                    // localStorage.setItem('loginName', res.data.name);  
+                    // Swal.fire{}
                     console.log(res)
                     setValues({username: '',password: ''})
                 }

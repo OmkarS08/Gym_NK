@@ -3,22 +3,17 @@ const calculateEndDate = require('../utils/dateUtil')
 const { format } = require('date-fns');
 
 const addMember = (req, res) => {
-    const { name, age, package, startDate, gender, mobile } = req.body
-
+    const { name, age, package, startDate, gender, mobile, payment } = req.body
     console.log('name:' + name, age, package, startDate, gender)
-
     const endDate = calculateEndDate(startDate, Number(package))
-
-    const sql = 'INSERT INTO `members` (`name`, `age`, `gender`, `mobile`, `package`, `startDate`, `endDate`, `status`, `delete_flag`) VALUES (?, ?, ?, ?, ?, ?, ?, 0 , 0) '
-
-    db.query(sql, [name, age, gender, mobile, package, startDate, endDate], (err, data) => {
+    const sql = 'INSERT INTO `members` (`name`, `age`, `gender`, `mobile`, `package`, `startDate`, `endDate`, `status`,`paymentMethod`, `delete_flag`) VALUES (?, ?, ?, ?, ?, ?, ?, 0 ,?, 0) '
+    db.query(sql, [name, age, gender, mobile, package, startDate, endDate, payment], (err, data) => {
         if (err) {
             return res.json("Error");
         }
         else {
             return res.json("Success");
         }
-
     })
 }
 
@@ -32,9 +27,10 @@ const deleteMember = (req, res) => {
 }
 
 const getMember = (req, res) => {
-    const sql = `SELECT id, name, age, gender, DATE_FORMAT(endDate, '%d-%M-%Y') as endDate
+    const sql = `SELECT id, name, age, gender, DATE_FORMAT(endDate, '%d-%M-%Y') as endDate ,mobile,DATE_FORMAT(startDate, '%Y-%m-%d') as startDate, paymentMethod
     FROM members 
     WHERE Delete_flag != '1'`
+
     db.query(sql, (err, data) => {
         if (err) {
             return res.json("Error");
@@ -45,4 +41,20 @@ const getMember = (req, res) => {
     })
 }
 
-module.exports = {addMember,deleteMember,getMember}
+const updateMember = (req, res) => {
+    const id = req.params.id;
+    const { name, age, package, startDate, gender, mobile, payment } = req.body
+    const endDate = calculateEndDate(startDate, Number(package))
+    const sql = 'UPDATE `members` SET `name` = ?, `age` = ?, `gender` = ?, `mobile` = ?, `package` = ?, `startDate` = ?, `endDate` = ?, `status` = 0, `paymentMethod` = ?, `delete_flag` = 0 WHERE `id` = ?';
+    db.query(sql, [name, age, gender, mobile, package, startDate, endDate, payment, id], (err, data) => {
+        if (err) {
+            return res.json("Error");
+        } else {
+            return res.json("Success");
+        }
+    });
+
+
+}
+
+module.exports = { addMember, deleteMember, getMember, updateMember }

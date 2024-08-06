@@ -1,63 +1,187 @@
-import React from 'react'
+import React, { useState } from 'react';
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
-const EditMember = () => {
+const EditMember = ({ member, handleClose }) => {
+  const [formData, setFormData] = useState({
+    name: member.name,
+    age: member.age,
+    mobile: member.mobile,
+    gender: member.gender,
+    package: member.package || 3,
+    startDate: member.startDate,
+    payment: member.paymentMethod,
+  });
+  console.log(formData)
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleEditSubmit = (e) => {
+    e.preventDefault();
+    axios.post(`http://localhost:8081/members/updateMember/${member.id}`, formData)
+      .then(res => {
+        if (res.status === 200) {
+          Swal.fire({
+            title: "Success!",
+            text: "Member information has been updated.",
+            icon: "success",
+            timer: 1500,
+            showConfirmButton: false,
+            timerProgressBar:"True"
+          });
+          handleClose(); // Close the modal after successful update
+                  
+          const myreload = ()=>{
+            window.location.reload()
+          }
+
+          setTimeout(myreload,1600)
+        } else {
+          console.log('Update failed');
+        }
+      })
+      .catch(err => {
+        console.error('Error:', err);
+      });
+  };
+
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-gray-800 bg-opacity-50">
-    <div className="bg-white p-6 rounded shadow-lg">
-      <h2 className="text-xl mb-4">Edit Member</h2>
-      <form onSubmit={handleFormSubmit}>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Name</label>
-          <input
-            type="text"
-            name="name"
-            value={currentMember.name}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Age</label>
-          <input
-            type="text"
-            name="age"
-            value={currentMember.age}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">Gender</label>
-          <input
-            type="text"
-            name="gender"
-            value={currentMember.gender}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">End Date</label>
-          <input
-            type="date"
-            name="endDate"
-            value={currentMember.endDate}
-            onChange={handleChange}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-        </div>
-        <div className="flex justify-end">
-          <button type="submit" className="px-4 py-2 font-medium text-white bg-green-600 rounded-md hover:bg-green-500 focus:outline-none focus:shadow-outline-green active:bg-green-600 transition duration-150 ease-in-out">
-            Save
-          </button>
-          <button onClick={() => setIsModalOpen(false)} type="button" className="ml-2 px-4 py-2 font-medium text-white bg-red-600 rounded-md hover:bg-red-500 focus:outline-none focus:shadow-outline-red active:bg-red-600 transition duration-150 ease-in-out">
-            Cancel
-          </button>
-        </div>
-      </form>
+      <div className="bg-white border rounded-lg px-8 py-5 mx-auto my-10 max-w-4xl">
+        <h2 className="text-2xl font-semibold mb-4 text-center">Edit Member</h2>
+        <form>
+          <div className="grid grid-cols-2 gap-4">
+            {/* Name Input */}
+            <div className="mb-4">
+              <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Name:</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
+                className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+              />
+            </div>
+
+            {/* Age Input */}
+            <div className="mb-4">
+              <label htmlFor="age" className="block text-gray-700 font-medium mb-2">Age:</label>
+              <input
+                type="number"
+                id="age"
+                name="age"
+                value={formData.age}
+                onChange={handleChange}
+                className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+              />
+            </div>
+
+            {/* Mobile Input */}
+            <div className="mb-4">
+              <label htmlFor="mobile" className="block text-gray-700 font-medium mb-2">Mobile:</label>
+              <input
+                type="tel"
+                id="mobile"
+                name="mobile"
+                value={formData.mobile}
+                onChange={handleChange}
+                className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+                // pattern="(\+91[\-\s]?)?[0]?(91)?[789]\d{9}"
+                required
+              />
+            </div>
+
+            {/* Gender Dropdown */}
+            <div className="mb-4">
+              <label htmlFor="gender" className="block text-gray-700 font-medium mb-2">Gender:</label>
+              <select
+                id="gender"
+                name="gender"
+                value={formData.gender}
+                onChange={handleChange}
+                className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+              >
+                <option value="">Select gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+              </select>
+            </div>
+
+            {/* Package Radio Buttons */}
+            <div className="mb-2 col-span-2">
+              <label className="block text-gray-700 font-medium mb-2">Package:</label>
+              <div className="grid grid-cols-2 gap-4">
+                {["1", "3", "6", "12"].map((pkg) => (
+                  <label key={pkg} className="flex items-center text-gray-700 font-medium mb-2">
+                    <input
+                      type="radio"
+                      name="package"
+                      value={pkg}
+                      checked={formData.package == pkg}
+                      onChange={handleChange}
+                      className="mr-2"
+                    />
+                    {pkg} Month{pkg !== "1" && "s"}
+                  </label>
+                ))}
+              </div>
+            </div>
+
+            {/* Start Date Input */}
+            <div className="mb-4">
+              <label className="block text-gray-700 font-medium mb-2">Start date:</label>
+              <input
+                type="date"
+                id="startDate"
+                name="startDate"
+                value={formData.startDate}
+                onChange={handleChange}
+                className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+              />
+            </div>
+
+            {/* Payment Dropdown */}
+            <div className="mb-4">
+              <label htmlFor="payment" className="block text-gray-700 font-medium mb-2">Payment:</label>
+              <select
+                id="payment"
+                name="payment"
+                value={formData.payment}
+                onChange={handleChange}
+                className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+              >
+                <option value="">Select Payment Method</option>
+                <option value="Cash">Cash</option>
+                <option value="UPI">UPI</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Submit Button */}
+          <div className="flex justify-center mt-4">
+            <button
+              type="button"
+              onClick={handleEditSubmit}
+              className="bg-blue-500 text-white px-6 py-2 rounded-lg hover:bg-blue-600"
+            >
+              Save
+            </button>
+            <button
+              type="button"
+              onClick={handleClose}
+              className="ml-2 bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-500"
+            >
+              Cancel
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-  </div>
-  )
+  );
 }
 
-export default EditMember
+export default EditMember;
