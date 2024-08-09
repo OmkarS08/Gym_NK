@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useState } from 'react';
 import Swal from 'sweetalert2';
 import EditMember from '../EditMember/EditMember';
+import logActivity  from '../../globalFunction/ActivityLog';
 
 
 const TableBody = ({ data }) => {
@@ -12,6 +13,7 @@ const TableBody = ({ data }) => {
 
   const handleEdit = (member) => {
     setCurrentMember(member);
+    console.log(member);
     setIsModalOpen(true);
   };
   
@@ -20,6 +22,7 @@ const TableBody = ({ data }) => {
       ...currentMember,
       [e.target.name]: e.target.value
     });
+    
   };
 
   const handleDelete = (id, name) => {
@@ -47,12 +50,15 @@ const TableBody = ({ data }) => {
                 timerProgressBar: true,
                 showConfirmButton: false,
               });
-              
+              logActivity(localStorage.getItem('loginId'),`Member Deleted -->${name}`)
+
               const myreload = ()=>{
                 window.location.reload()
               }
 
               setTimeout(myreload,1590)
+
+             
 
             } else {
               console.log('failed');

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import logActivity from '../../globalFunction/ActivityLog';
 
 const EditMember = ({ member, handleClose }) => {
   const [formData, setFormData] = useState({
@@ -8,10 +9,11 @@ const EditMember = ({ member, handleClose }) => {
     age: member.age,
     mobile: member.mobile,
     gender: member.gender,
-    package: member.package || 3,
+    package: member.package ,
     startDate: member.startDate,
     payment: member.paymentMethod,
   });
+  const oldMemberName = member.name;
   console.log(formData)
 
   const handleChange = (e) => {
@@ -37,8 +39,9 @@ const EditMember = ({ member, handleClose }) => {
           const myreload = ()=>{
             window.location.reload()
           }
-
           setTimeout(myreload,1600)
+
+          logActivity(localStorage.getItem('loginId'),`Member with name id ${oldMemberName === formData.name ? oldMemberName : formData.name } has been edited`)
         } else {
           console.log('Update failed');
         }

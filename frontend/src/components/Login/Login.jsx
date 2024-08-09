@@ -3,6 +3,7 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import logActivity from '../../globalFunction/ActivityLog';
 
 const Login = () => {
 
@@ -15,31 +16,38 @@ const Login = () => {
 
     const handleInput = (event) => {
         setValues(prev => ({ ...prev, [event.target.name]: [event.target.value] }))
-        console.log(values);
     }
 
     const handleSubmit = (event) => {
-       
-        console.log('submit');
+
+
         axios.post('http://localhost:8081/auth/login', values)
             .then(res => {
-                if (res.data === "Success") {
+                if (res.data.status === 'success') {
                     console.log(res.data);
                     navigate('/Dasboard');
                     localStorage.setItem('loginAlert', 'true');
-                    // localStorage.setItem('loginName', res.data.name);  
-                    // Swal.fire{}
+                    localStorage.setItem('loginId', res.data.userId); // Store the user ID 
+                    Swal.fire({
+                        toast: true,
+                        position: "top-end",
+                        icon: "success",
+                        title: `Welcome ${res.data.userName}`,
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: "True"
+                    });
                     console.log(res)
-                    setValues({username: '',password: ''})
+                    setValues({ username: '', password: '' })
+                    logActivity(res.data.userId, 'User logged in');
                 }
-                
+
                 else {
-                    alert("No Record Existed");
-                    console.log(res)
+                    Swal.fire('Login Failed', res.data.message, 'error');
                 }
             })
             .catch(err => console.log(err));
-     
+
     }
 
 
@@ -51,7 +59,7 @@ const Login = () => {
                 <div className="min-h-96 px-8 py-6 mt-4 text-left bg-white dark:bg-gray-900  rounded-xl shadow-lg">
                     <div className="flex flex-col justify-center items-center h-full select-none">
                         <div className="flex flex-col items-center justify-center gap-2 mb-8">
-                                <img src="/2DPNG.png" alt='logi' className="w-22" />
+                            <img src="/2DPNG.png" alt='logi' className="w-22" />
                             <p className="m-0 text-[16px] font-semibold dark:text-white">NK</p>
                             <span className="m-0 text-xs max-w-[90%] text-center text-[#8B8E98]">Get started with our app, just start section and enjoy experience.
                             </span>

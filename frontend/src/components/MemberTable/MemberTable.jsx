@@ -5,13 +5,15 @@ import axios from 'axios'
 const MemberTable = () => {
 
     const [data, setData] = useState([]);
+    const [searchTerm, setSearchTerm] = useState('');
+    const [filteredData, setFilteredData] = useState([]);
 
     useEffect(() => {
         axios.get('http://localhost:8081/members/getMember')
             .then(res => {
                 if (res.status === 200) {
                     setData(res.data)
-                    console.log('pass')
+    
                 }
                 else {
                     console.log(res.status)
@@ -20,8 +22,25 @@ const MemberTable = () => {
             .catch(err => console.log(err))
     }, [])
     console.log(data)
+    const handleSearch = (e) => {
+        setSearchTerm(e.target.value);
+        const filtered = data.filter(item => item.name.toLowerCase().includes(e.target.value.toLowerCase()));
+        setFilteredData(filtered);
+    }
+
     return (
         <>
+        <>
+            <div className="flex justify-start mb-4 ">
+                <input 
+                    type="search" 
+                    placeholder="Search by name" 
+                    value={searchTerm} 
+                    onChange={handleSearch} 
+                    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+                />
+            </div>
+        </>
             <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr>
@@ -35,7 +54,7 @@ const MemberTable = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
 
-                    {!data ? "No data" : <TableBody data={data} setData={setData} />}
+                {filteredData.length === 0 ? <TableBody data={data } setData={setData} /> : <TableBody data={filteredData} setData={setData} />}
 
                 </tbody>
             </table>

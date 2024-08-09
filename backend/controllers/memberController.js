@@ -27,9 +27,10 @@ const deleteMember = (req, res) => {
 }
 
 const getMember = (req, res) => {
-    const sql = `SELECT id, name, age, gender, DATE_FORMAT(endDate, '%d-%M-%Y') as endDate ,mobile,DATE_FORMAT(startDate, '%Y-%m-%d') as startDate, paymentMethod
+    const sql = `SELECT id, name, age, gender, DATE_FORMAT(endDate, '%d-%M-%Y') as endDate ,mobile,DATE_FORMAT(startDate, '%Y-%m-%d') as startDate, paymentMethod ,package
     FROM members 
-    WHERE Delete_flag != '1'`
+    WHERE Delete_flag != '1'
+    ORDER BY member_time_stamp DESC `
 
     db.query(sql, (err, data) => {
         if (err) {
@@ -57,4 +58,27 @@ const updateMember = (req, res) => {
 
 }
 
-module.exports = { addMember, deleteMember, getMember, updateMember }
+const packageEnding = (req , res) =>{
+    const sql = `
+        SELECT 
+            name, 
+            mobile, 
+            DATE_FORMAT(endDate, '%d-%M-%Y') as endDate,
+            DATEDIFF(endDate, NOW()) AS days_left
+        FROM 
+            members
+        WHERE 
+            DATEDIFF(endDate, NOW()) <= 3 
+            AND DATEDIFF(endDate, NOW()) >= 0;
+    `
+    db.query(sql, (err, data) => {
+        if (err) {
+            return res.json("Error");
+        }
+        else {
+            return res.json(data);
+        }
+    })
+}
+
+module.exports = { addMember, deleteMember, getMember, updateMember,packageEnding }

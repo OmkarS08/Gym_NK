@@ -2,6 +2,7 @@ import React from 'react'
 import { useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import logActivity from '../../globalFunction/ActivityLog';
 
 const MemberForm = () => {
     const [formData, setFormData] = useState({
@@ -32,6 +33,7 @@ const MemberForm = () => {
                     console.log(res)
                     localStorage.setItem('showSuccessAlert', 'true'); 
                     navigate('/Members')
+                    logActivity(localStorage.getItem('loginId'),`New Member Added--> ${formData.name}`)
                 }
                 
                 else {

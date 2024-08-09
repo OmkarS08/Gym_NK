@@ -3,6 +3,7 @@ import Login from "./components/Login/Login";
 import Members from "./components/Members/Members";
 import Notification from "./components/Notification/Notification";
 import AddMember from "./components/AddMember/AddMember";
+import ActivityLog from "./components/ActivityLog/ActivityLog";
 import Setting from "./components/Setting/Setting";
 import {BrowserRouter,Routes,Route} from 'react-router-dom' 
 
@@ -16,7 +17,7 @@ function App() {
           <Route path='/Members' element={<Members />}></Route>
           <Route path = '/AddMember' element ={<AddMember/>}></Route>
           <Route path = '/Notification' element ={<Notification/>}></Route>
-          <Route path = '/ActivityLogs' element ={<Setting/>}></Route>
+          <Route path = '/ActivityLogs' element ={<ActivityLog/>}></Route>
           <Route path = '/Setting' element ={<Setting/>}></Route>
         </Routes>
 

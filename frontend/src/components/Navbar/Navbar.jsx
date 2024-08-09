@@ -1,11 +1,11 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-
+import logActivity from '../../globalFunction/ActivityLog'
 import Swal from 'sweetalert2'
 const Navbar = () => {
     const navigate = useNavigate()
     const handleClick = (event) => {
-    
+
         if (event.target.name === '') {
             Swal.fire({
                 title: "Are you sure want to Logout?",
@@ -14,16 +14,18 @@ const Navbar = () => {
                 confirmButtonColor: "#d33",
                 cancelButtonColor: "#3085d6",
                 confirmButtonText: "Yes,Logout"
-              }).then((result) => {
+            }).then((result) => {
                 if (result.isConfirmed) {
+                    logActivity(localStorage.getItem('loginId'),'Logged Out');
+                    localStorage.removeItem('loginId');
                     navigate('/');
                 }
-              });
-          }
-        else{
+            });
+        }
+        else {
             navigate(`/${event.target.name}`)
-        }  
-       
+        }
+
     }
 
     return (
@@ -56,7 +58,7 @@ const Navbar = () => {
                     >
                         Notification
                     </a>
-              
+
                     <a
                         href="#"
                         className="flex items-center px-4 py-2 mt-2 text-gray-100 hover:bg-gray-700"
@@ -81,7 +83,7 @@ const Navbar = () => {
                     >
                         Logout
                     </a>
-        
+
                 </nav>
             </div>
         </div>
