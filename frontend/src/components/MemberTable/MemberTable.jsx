@@ -13,34 +13,37 @@ const MemberTable = () => {
             .then(res => {
                 if (res.status === 200) {
                     setData(res.data)
-    
+                    setFilteredData(res.data)
+
                 }
                 else {
                     console.log(res.status)
                 }
             })
             .catch(err => console.log(err))
-    }, [])
+    }, [data])
     console.log(data)
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);
+        const previousData = data;
         const filtered = data.filter(item => item.name.toLowerCase().includes(e.target.value.toLowerCase()));
+        // setData(filtered)
         setFilteredData(filtered);
     }
 
     return (
         <>
-        <>
-            <div className="flex justify-start mb-4 ">
-                <input 
-                    type="search" 
-                    placeholder="Search by name" 
-                    value={searchTerm} 
-                    onChange={handleSearch} 
-                    className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
-                />
-            </div>
-        </>
+            <>
+                <div className="flex justify-start mb-4 ">
+                    <input
+                        type="search"
+                        placeholder="Search by name"
+                        value={searchTerm}
+                        onChange={handleSearch}
+                        className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500"
+                    />
+                </div>
+            </>
             <table className="min-w-full divide-y divide-gray-200">
                 <thead>
                     <tr>
@@ -54,8 +57,8 @@ const MemberTable = () => {
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
 
-                {filteredData.length === 0 ? <TableBody data={data } setData={setData} /> : <TableBody data={filteredData} setData={setData} />}
-
+                    {filteredData.length === 0 ? <tr>
+                        <td colSpan="6" className='text-center'>Member Not found</td></tr> : <TableBody data={filteredData} setData={setData} />}
                 </tbody>
             </table>
         </>

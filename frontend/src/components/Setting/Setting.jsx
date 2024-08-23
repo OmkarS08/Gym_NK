@@ -10,11 +10,24 @@ const Setting = () => {
         </div>
       </div>
       <div className="p-4">
-         <ul>
-          <li >Payment toggle</li>
-          <li>change fees strucutre</li>
-          <li>Change in password</li>
-         </ul>
+      <div className='grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8'>
+            <button
+              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+              Payment toggle
+            </button>
+            <button
+              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+              change fees strucutre
+            </button>
+            <button
+              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+              Change in password
+            </button>
+            <button
+              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
+              Add staff Member
+            </button>
+      </div>
       </div>
     </div>
 

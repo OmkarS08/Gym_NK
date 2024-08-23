@@ -1,9 +1,9 @@
 import React from 'react'
 import axios from 'axios';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Swal from 'sweetalert2';
 import EditMember from '../EditMember/EditMember';
-import logActivity  from '../../globalFunction/ActivityLog';
+import logActivity from '../../globalFunction/ActivityLog';
 
 
 const TableBody = ({ data }) => {
@@ -11,18 +11,20 @@ const TableBody = ({ data }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [currentMember, setCurrentMember] = useState(null);
 
+
+
   const handleEdit = (member) => {
     setCurrentMember(member);
     console.log(member);
     setIsModalOpen(true);
   };
-  
+
   const handleChange = (e) => {
     setCurrentMember({
       ...currentMember,
       [e.target.name]: e.target.value
     });
-    
+
   };
 
   const handleDelete = (id, name) => {
@@ -41,8 +43,8 @@ const TableBody = ({ data }) => {
           .then(res => {
             if (res.status === 200) {
               Swal.fire({
-                toast:true,
-                position:'top-end',
+                toast: true,
+                position: 'top-end',
                 title: "Deleted!",
                 text: `${name} has been deleted.`,
                 icon: "error",
@@ -50,15 +52,15 @@ const TableBody = ({ data }) => {
                 timerProgressBar: true,
                 showConfirmButton: false,
               });
-              logActivity(localStorage.getItem('loginId'),`Member Deleted -->${name}`)
+              logActivity(localStorage.getItem('loginId'), `Member Deleted -->${name}`)
 
-              const myreload = ()=>{
+              const myreload = () => {
                 window.location.reload()
               }
 
-              setTimeout(myreload,1590)
+              setTimeout(myreload, 1590)
 
-             
+
 
             } else {
               console.log('failed');
@@ -68,7 +70,7 @@ const TableBody = ({ data }) => {
             console.error('Error:', err); // Add error handling
           });
         console.log(`Deleting member with id: ${id}`); // Add console log
-  
+
       }
     });
 
@@ -89,14 +91,22 @@ const TableBody = ({ data }) => {
       ) : (
         data.map((ele, index) => (
           <tr key={index}>
-            <td className="px-6 py-4 whitespace-nowrap">{ele.name}</td>
+            <td className="px-6 py-4 whitespace-nowrap"  >{ele.name}</td>
             <td className="px-6 py-4 whitespace-nowrap">{ele.age}</td>
             <td className="px-6 py-4 whitespace-nowrap">{ele.gender}</td>
             <td className="px-6 py-4 whitespace-nowrap">{ele.endDate}</td>
             <td className="px-6 py-4 whitespace-nowrap">
-              <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                Active
-              </span>
+              { 
+              new Date(ele.endDate) > new Date()  ? (
+                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
+                  Active
+                </span>
+              ) : (
+                <span className="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">
+                  Inactive
+                </span>
+
+              )}
             </td>
             <td className="px-6 py-4 whitespace-nowrap">
               <button onClick={() => handleEdit(ele)} className="px-4 py-2 font-medium text-white bg-blue-600 rounded-md hover:bg-blue-500 focus:outline-none focus:shadow-outline-blue active:bg-blue-600 transition duration-150 ease-in-out">

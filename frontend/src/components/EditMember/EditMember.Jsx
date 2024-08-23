@@ -67,6 +67,7 @@ const EditMember = ({ member, handleClose }) => {
                 value={formData.name}
                 onChange={handleChange}
                 className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+                readOnly
               />
             </div>
 

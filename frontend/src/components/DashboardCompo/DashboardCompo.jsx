@@ -1,11 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 
+import axios from 'axios';
 const DashboardCompo = () => {
+  
+    const [count,setCount] = useState({
+        female: null,
+        male:null,
+        total:null,
+    });
 
+    useEffect(()=>{
+        axios.get('http://localhost:8081/dashboard/memberCount')
+        .then(res =>{
+            if (res.status === 200) {
+                // Assuming res.data contains an array of gender counts
+                const genderData = res.data;
+                const genderCount = {
+                    female: genderData.find(g => g.gender === 'female')?.gender_count || 0,
+                    male: genderData.find(g => g.gender === 'male')?.gender_count || 0,
+                    total: genderData.find(g => g.gender === 'Total')?.gender_count || 0
+                };
+                setCount(genderCount);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching member count:', error);
+        });
+    },[count])
 
 
   return (
-    <div><div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8">
+    <div><div className="grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-3 sm:px-8">
     <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
         <div className="p-4 bg-green-400"><svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">
@@ -15,7 +40,7 @@ const DashboardCompo = () => {
             </svg></div>
         <div className="px-4 text-gray-700">
             <h3 className="text-sm tracking-wider">Total Member</h3>
-            <p className="text-3xl">12,768</p>
+            <p className="text-3xl">{count.total}</p>
         </div>
     </div>
     <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
@@ -26,8 +51,8 @@ const DashboardCompo = () => {
                 </path>
             </svg></div>
         <div className="px-4 text-gray-700">
-            <h3 className="text-sm tracking-wider"></h3>
-            <p className="text-3xl">39,265</p>
+            <h3 className="text-sm tracking-wider">Male Members</h3>
+            <p className="text-3xl">{count.male}</p>
         </div>
     </div>
     <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
@@ -38,23 +63,14 @@ const DashboardCompo = () => {
                 </path>
             </svg></div>
         <div className="px-4 text-gray-700">
-            <h3 className="text-sm tracking-wider">Total Comment</h3>
-            <p className="text-3xl">142,334</p>
+            <h3 className="text-sm tracking-wider">Female Members</h3>
+            <p className="text-3xl">{count.female}</p>
         </div>
     </div>
-    <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
-        <div className="p-4 bg-red-400"><svg xmlns="http://www.w3.org/2000/svg" className="h-12 w-12 text-white" fill="none"
-                viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                    d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4">
-                </path>
-            </svg></div>
-        <div className="px-4 text-gray-700">
-            <h3 className="text-sm tracking-wider">Server Load</h3>
-            <p className="text-3xl">34.12%</p>
-        </div>
-    </div>
-</div></div>
+    
+</div>
+
+</div>
   )
 }
 

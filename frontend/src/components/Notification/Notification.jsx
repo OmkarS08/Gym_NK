@@ -7,6 +7,7 @@ import NotificationEndDateTable from './NotificationEndDateTable';
 const Notification = () => {
 
   const [data, setData] = useState([]);
+  const[packageExpiredData , setPackageExpiredData] = useState([]);
 
   useEffect(() => {
     axios.get(`http://localhost:8081/members/packageEnding`)
@@ -18,7 +19,19 @@ const Notification = () => {
           console.log(res.status)
         }
       }).catch(err => console.log(err))
-  })
+  },[data])
+
+  useEffect(() => {
+    axios.get(`http://localhost:8081/members/packageExpired`)
+      .then(res => {
+        if (res.status === 200) {
+          setPackageExpiredData(res.data)
+        }
+        else {
+          console.log(res.status)
+        }
+      }).catch(err => console.log(err))
+  },[packageExpiredData])
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -56,6 +69,33 @@ const Notification = () => {
 
             </tbody>
           </table>
+          <div className='my-4'>
+          <div className='flex justify-center mb-5'>
+          <label
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring focus:border-blue-500 bg-white w-5xl"
+            >Members  Package  Expired </label>
+            </div>
+            <table className="min-w-full divide-y divide-gray-200">
+            <thead>
+              <tr>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Sr</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Member Name</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Mobile</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">EndDate</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Days left</th>
+                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+            {!packageExpiredData || packageExpiredData.length === 0 ? (
+                <tr>
+                  <td colSpan="6" className='text-center'>No Data Available</td>
+                </tr>
+              ) : <NotificationEndDateTable data={packageExpiredData}/>}
+            </tbody>
+           </table>
+           </div>
         </div>
       </div>
 

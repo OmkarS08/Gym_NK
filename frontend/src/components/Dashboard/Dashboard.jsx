@@ -1,6 +1,7 @@
 import React from 'react'
 import DashboardCompo from '../DashboardCompo/DashboardCompo'
 import Navbar from '../Navbar/Navbar'
+import DashboardTChart from '../DashboardCompo/DashboardTChart'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
 const Dashboard = () => {
@@ -31,6 +32,16 @@ const Dashboard = () => {
         </div>
         <div className="p-4">
           <DashboardCompo />
+          <div className=''>
+            <div className='w-1/2'>
+              <DashboardTChart/>
+            </div>
+            <div className=''>
+              
+              </div>
+          </div>
+          <br></br>
+          <>Montly Report </>
         </div>
       </div>
 
