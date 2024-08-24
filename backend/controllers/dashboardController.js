@@ -32,15 +32,15 @@ WHERE
     })
 }
 
-const BarChart =(req,res)=>{
+const BarChart = (req, res) => {
     const sql = `SELECT 
-    DATE_FORMAT(member_time_stamp, '%Y') AS year, 
-     DATE_FORMAT(member_time_stamp, '%M') AS month, 
+    DATE_FORMAT(startDate, '%Y') AS year, 
+     DATE_FORMAT(startDate, '%M') AS month, 
     COUNT(*) AS member_count 
 FROM 
     members 
 WHERE 
-    delete_flag != 1  -- Assuming you want to exclude deleted members
+    delete_flag != 1  
 GROUP BY 
     month 
 ORDER BY 
@@ -55,5 +55,20 @@ ORDER BY
     })
 }
 
+const PieChart = (req, res) => {
+    sql = `SELECT package, COUNT(*) as package_count
+    FROM members
+    WHERE Delete_flag = 0 
+    GROUP BY package;`
+    db.query(sql, (err, data) => {
+        if (err) {
+            return res.json("Error in Backend");
+        }
+        else {
+            return res.json(data);
+        }
+    })
+}
 
-module.exports = { memberCount,BarChart }
+
+module.exports = { memberCount, BarChart,PieChart }

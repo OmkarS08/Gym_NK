@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const db = require('./config/db');
+const session = require('express-session');
+const SequelizeStore = require('connect-session-sequelize')(session.Store);
 const authRoutes = require('./routes/authRoutes');
 const memberRoutes = require('./routes/memberRoutes');
 const activityLog  = require('./routes/activityRoutes');
@@ -8,6 +10,8 @@ const dashboard = require('./routes/dashboardRoutes');
 const app = express();
 app.use(cors());
 app.use(express.json());
+
+
 
 // Routes
 app.use('/auth', authRoutes);

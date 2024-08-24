@@ -19,14 +19,12 @@ const Login = () => {
     }
 
     const handleSubmit = (event) => {
-
-
+        event.preventDefault(); // Prevent default form submission
+    
         axios.post('http://localhost:8081/auth/login', values)
             .then(res => {
                 if (res.data.status === 'success') {
-                    console.log(res.data);
-                    navigate('/Dasboard');
-                    localStorage.setItem('loginAlert', 'true');
+                    localStorage.setItem('isLoggedIn', true);
                     localStorage.setItem('loginId', res.data.userId); // Store the user ID 
                     Swal.fire({
                         toast: true,
@@ -37,17 +35,13 @@ const Login = () => {
                         timer: 2000,
                         timerProgressBar: "True"
                     });
-                    console.log(res)
-                    setValues({ username: '', password: '' })
+                    navigate('/Dashboard'); // Redirect to dashboard
                     logActivity(res.data.userId, 'User logged in');
-                }
-
-                else {
+                } else {
                     Swal.fire('Login Failed', res.data.message, 'error');
                 }
             })
             .catch(err => console.log(err));
-
     }
 
 

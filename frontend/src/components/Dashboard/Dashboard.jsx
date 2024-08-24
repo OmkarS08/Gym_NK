@@ -4,25 +4,25 @@ import Navbar from '../Navbar/Navbar'
 import DashboardTChart from '../DashboardCompo/DashboardTChart'
 import axios from 'axios'
 import { useState,useEffect } from 'react'
+import { useNavigate } from 'react-router-dom';
+import logActivity from '../../globalFunction/ActivityLog'
+import DashboardPieChart from '../DashboardCompo/DashboardPieChart'
 const Dashboard = () => {
 
-//   const [data,setData] =useState()
+  const navigate = useNavigate();
 
-//   useEffect(()=>{
-//     axios.get('http://localhost:8081/dashboardCount')
-//     .then(res => {
-//         if (res.status === 200) {
-//             setData(res.data)
-//             console.log('pass')
-//             console.log(res)
-//         }
-//         else {
-//             console.log(res.status)
-//         }
-//     })
-//     .catch(err => console.log(err))
-// },[])
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      // Clear session on the client side
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('loginId'); // Clear user ID
+      // Redirect to the login page
+      logActivity(localStorage.getItem('loginId'),'Logged Out');
+      navigate('/');
+    }, 8 * 60 * 1000); // 8 minutes
 
+    return () => clearTimeout(timeout); // Clear the timeout if the component unmounts
+  }, [navigate]);
 
   return (
     <div className="flex h-screen bg-gray-100">
@@ -32,16 +32,14 @@ const Dashboard = () => {
         </div>
         <div className="p-4">
           <DashboardCompo />
-          <div className=''>
+          <div className='w-full flex mx-6 px-2 my-4  justify-center'>
+          <div className='w-90 '>
+              <DashboardPieChart/>
+            </div>
             <div className='w-1/2'>
               <DashboardTChart/>
             </div>
-            <div className=''>
-              
-              </div>
-          </div>
-          <br></br>
-          <>Montly Report </>
+         </div>
         </div>
       </div>
 

@@ -1,6 +1,19 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../Navbar/Navbar'
+import ChangePassword from './ChangePassword';
+import PaymentToogle from './PaymentToogle';
+import FeeStrucutre from './FeeStrucutre';
 const Setting = () => {
+
+
+  const [passwordPage,setPasswordPage] = useState(false);
+  const [toogle, setTooglePage] = useState(false);
+  const [Payment , setPaymentPage] = useState(false); 
+
+  const handlePress =(name) =>{
+
+  }
+
   return (
     <div className="flex h-screen bg-gray-100">
     <Navbar/>
@@ -20,14 +33,14 @@ const Setting = () => {
               change fees strucutre
             </button>
             <button
+              onClick={()=>handlePress('password')}
               class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
               Change in password
             </button>
-            <button
-              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
-              Add staff Member
-            </button>
+      
       </div>
+      {passwordPage ? <ChangePassword/> :''}
+\
       </div>
     </div>
 
