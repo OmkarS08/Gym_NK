@@ -70,7 +70,8 @@ const MemberForm = () => {
             />
           </div>
           <div className="mb-4">
-            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Mobile:</label>
+            <label htmlFor="name" className="block text-gray-700 font-medium mb-2">Mobile:
+            </label>
             <input
               type="tel"
               id="mobile"

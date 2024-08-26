@@ -21,7 +21,7 @@ const MemberTable = () => {
                 }
             })
             .catch(err => console.log(err))
-    }, [data])
+    }, [])
     console.log(data)
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);

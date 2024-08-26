@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { addMember, deleteMember, getMember,updateMember,packageEnding,packageExpired,staffMember,getOnlyMember } = require('../controllers/memberController');
+const { addMember, deleteMember, getMember,updateMember,packageEnding,packageExpired,getOnlyMember } = require('../controllers/memberController');
 
 
 
@@ -13,5 +13,5 @@ router.get('/getMember', getMember);
 router.get('/getOnlyMember', getOnlyMember);
 router.get('/packageEnding',packageEnding)
 router.get('/packageExpired',packageExpired)
-router.get('/staffMembers',staffMember)
+
 module.exports = router;

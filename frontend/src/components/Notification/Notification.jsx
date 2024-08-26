@@ -19,7 +19,7 @@ const Notification = () => {
           console.log(res.status)
         }
       }).catch(err => console.log(err))
-  },[data])
+  },[])
 
   useEffect(() => {
     axios.get(`http://localhost:8081/members/packageExpired`)
@@ -31,7 +31,7 @@ const Notification = () => {
           console.log(res.status)
         }
       }).catch(err => console.log(err))
-  },[packageExpiredData])
+  },[])
 
   return (
     <div className="flex h-screen bg-gray-100">

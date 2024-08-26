@@ -10,14 +10,17 @@ import DashboardPieChart from '../DashboardCompo/DashboardPieChart'
 const Dashboard = () => {
 
   const navigate = useNavigate();
+  const isadmin = localStorage.getItem('admin');
+  console.log(isadmin)
 
   useEffect(() => {
     const timeout = setTimeout(() => {
       // Clear session on the client side
+      logActivity(localStorage.getItem('loginId'),'Logged Out');
       localStorage.removeItem('isLoggedIn');
       localStorage.removeItem('loginId'); // Clear user ID
       // Redirect to the login page
-      logActivity(localStorage.getItem('loginId'),'Logged Out');
+  
       navigate('/');
     }, 8 * 60 * 1000); // 8 minutes
 
@@ -26,7 +29,7 @@ const Dashboard = () => {
 
   return (
     <div className="flex h-screen bg-gray-100">
-      <Navbar/>
+      <Navbar isadmin={isadmin}/>
       <div className="flex flex-col flex-1 overflow-y-auto">
         <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200">
         </div>

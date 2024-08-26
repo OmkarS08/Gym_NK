@@ -104,17 +104,7 @@ const packageExpired = (req,res) =>{
             })
 }
 
-const staffMember  = (req,res)=>{
-    const sql = `SELECT id , username ,admin FROM login WHERE delete_flag_login != 1`
-    db.query(sql, (err, data) => {
-        if (err) {
-            return res.json("Error");
-        }
-        else {
-            return res.json(data);
-        }
-    })
-}
+
 
 const getOnlyMember = (req,res) =>{
     const sql = `SELECT name as value, name as label  FROM members WHERE Delete_flag != '1'`
@@ -128,4 +118,4 @@ const getOnlyMember = (req,res) =>{
     })
 }
 
-module.exports = { addMember, deleteMember, getMember, updateMember,packageEnding,packageExpired,staffMember,getOnlyMember }
+module.exports = { addMember, deleteMember, getMember, updateMember,packageEnding,packageExpired,getOnlyMember }
