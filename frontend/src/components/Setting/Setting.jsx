@@ -1,50 +1,32 @@
 import React, { useState } from 'react'
 import Navbar from '../Navbar/Navbar'
-import ChangePassword from './ChangePassword';
-import PaymentToogle from './PaymentToogle';
 import FeeStrucutre from './FeeStrucutre';
+
 const Setting = () => {
 
 
-  const [passwordPage,setPasswordPage] = useState(false);
-  const [toogle, setTooglePage] = useState(false);
-  const [Payment , setPaymentPage] = useState(false); 
+  const [passwordPage, setPasswordPage] = useState(false);
 
-  const handlePress =(name) =>{
+
+  const handlePress = (name) => {
 
   }
 
   return (
     <div className="flex h-screen bg-gray-100">
-    <Navbar/>
-    <div className="flex flex-col flex-1 overflow-y-auto">
-      <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200 ">
-        <div className='flex-button-container'>
+      <Navbar />
+      <div className="flex flex-col flex-1 overflow-y-auto">
+        <div className="flex items-center justify-between h-16 bg-white border-b border-gray-200 ">
+          <div className='flex-button-container'>
+          </div>
+        </div>
+        <div className="p-4">
+        <FeeStrucutre/>
+      
         </div>
       </div>
-      <div className="p-4">
-      <div className='grid grid-cols-1 gap-4 px-4 mt-8 sm:grid-cols-4 sm:px-8'>
-            <button
-              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
-              Payment toggle
-            </button>
-            <button
-              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
-              change fees strucutre
-            </button>
-            <button
-              onClick={()=>handlePress('password')}
-              class="border border-gray-700 bg-gray-700 text-white rounded-md px-4 py-2 m-2 transition duration-500 ease select-none hover:bg-gray-800 focus:outline-none focus:shadow-outline">
-              Change in password
-            </button>
-      
-      </div>
-      {passwordPage ? <ChangePassword/> :''}
-\
-      </div>
-    </div>
 
-  </div>
+    </div>
   )
 }
 

@@ -9,6 +9,7 @@ const activityLog  = require('./routes/activityRoutes');
 const dashboard = require('./routes/dashboardRoutes');
 const staffMember = require('./routes/staffMemberRoutes');
 const steamBath = require('./routes/steamBathRoutes');
+const package = require('./routes/packageRoutes');
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -23,6 +24,7 @@ app.use('/dashboard',dashboard)
 app.use('/staffMember',staffMember);
 app.use('/steamBath',steamBath);
 // app.use('/transaction',Money);
+app.use('/package',package);
 // Start server
 app.listen(8081, () => {
     console.log("Server is running on port 8081");

@@ -9,6 +9,7 @@ import StaffMemberPage from "./components/StaffMember/StaffMemberPage";
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PrivateComponent from "./components/PrivateComponent/PrivateComponent";
 import SteamBath from "./components/Steam Bath/SteamBath";
+import Transaction from "./components/Transaction/Transaction";
 
 function App() {
   return (
@@ -34,6 +35,9 @@ function App() {
             </PrivateComponent>}></Route>
             <Route path='/steamBath' element={<PrivateComponent>
               <SteamBath/>
+            </PrivateComponent>}></Route>
+            <Route path='/Transaction' element={<PrivateComponent>
+              <Transaction/>
             </PrivateComponent>}></Route>
           <Route path='/ActivityLogs' element={<PrivateComponent>
               <ActivityLog/>

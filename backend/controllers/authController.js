@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcrypt');
 
 const login = (req, res) => {
+
     const sql = "SELECT * FROM login WHERE `username` = ? AND `password` = ? AND delete_flag_login != '1' ";
     db.query(sql, [req.body.username, req.body.password], (err, data) => {
         if (err) {
