@@ -29,53 +29,66 @@ const MemberForm = () => {
     const transactionData = {
       transaction_person_name: memberId,
       transaction_package_amount: packageAmount,
-      transaction_amount_paid: formData.amountPaid,
+      transaction_amount_paid: Number(formData.amountPaid),
       transaction_amount_due: packageAmount - formData.amountPaid,
-      transaction_time_stamp: new Date().toISOString()
     };
-
-    axios.post('http://localhost:8081/transactions/logTransaction', transactionData)
+  
+    return axios.post('http://localhost:8081/transaction/addTranscation', transactionData)
       .then(res => {
         if (res.status === 200) {
           console.log('Transaction logged successfully');
+          return true;
+        } else {
+          console.log('Transaction didn\'t log');
+          return false;
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err);
+        return false;
+      });
   };
+  
 
   useEffect(() => {
     if (formData.package) {
       axios.get(`http://localhost:8081/package/getPackageAmount/${formData.package}`)
         .then(res => {
           if (res.status === 200) {
-            console.log(res.data);
+
             setPackageAmount(res.data[0].packagePrice);
-            console.log(packageAmount)
+   
           }
         })
-        .catch(err => console.log(err));
+        .catch(err => console.error(err));
     }
   }, [formData.package]);
 
   const handleSubmit = (event) => {
     event.preventDefault();
     // handle form submission
-    console.log(formData);
-    axios.post('http://localhost:8081/members/AddMember', formData)
-      .then(res => {
-        if (res.data === "Success") {
-          console.log(res)
-          localStorage.setItem('showSuccessAlert', 'true');
-          navigate('/Members')
-          logActivity(localStorage.getItem('loginId'), `New Member Added--> ${formData.name}`)
-        }
 
-        else {
-          console.log(res)
+    axios.post('http://localhost:8081/members/AddMember', formData)
+      .then(async res => {  // Use async to handle the promise returned by logTransaction
+        if (res.data.message === "Success") {
+          const transactionLogged = await logTransaction(res.data.memberId);
+          
+          if (transactionLogged) {
+         
+              localStorage.setItem('showSuccessAlert', 'true');
+              navigate('/Members');
+              logActivity(localStorage.getItem('loginId'), `New Member Added--> ${formData.name}`);
+          
+          } else {
+            console.log('Transaction logging failed. Navigation aborted.');
+          }
+        } else {
+          console.log(res);
         }
       })
       .catch(err => console.log(err));
   };
+  
 
   return (
     <div className="bg-white border rounded-lg px-4 py-4 mx-auto my-8 max-w-2xl">

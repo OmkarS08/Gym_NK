@@ -16,7 +16,6 @@ const staffMember  = (req,res)=>{
 
 const addStaffMember = (req, res) => {
     const { name, password, role } = req.body;
-
     if (!name || !password || !role) {
         return res.status(400).json({ error: 'All fields are required' });
     }
@@ -24,12 +23,14 @@ const addStaffMember = (req, res) => {
     // Hash the password before storing it
     bcrypt.hash(password, saltRounds, (err, hashedPassword) => {
         if (err) {
+            console.log('Error hashing password:', err);
             return res.status(500).json({ error: 'Error hashing password' });
         }
 
         const query = 'INSERT INTO login (username, password, admin) VALUES (?, ?, ?)';
         db.query(query, [name, hashedPassword, role], (err, result) => {
             if (err) {
+                console.log('Database error:', err);
                 return res.status(500).json({ error: 'Database error' });
             }
             res.status(200).json({ message: 'Staff member added successfully' });

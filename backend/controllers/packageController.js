@@ -30,7 +30,6 @@ const updatePackage = (req,res) =>{
 
 const getPackageAmount = (req,res)=>{
     const packageMonth = req.params.month;
-    console.log(packageMonth);
     const sql = `SELECT packagePrice FROM package WHERE packageMonth = ${packageMonth}`;
     db.query(sql, (err, data) => {
         if (err) {

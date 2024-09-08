@@ -11,7 +11,7 @@ const StaffMember = () => {
             .then(res => {
                 if (res.status === 200) {
                     setStaffMemberData(res.data)
-                    console.log(staffMemberData)
+                
                 }
                 else {
                     console.log(res.status)
@@ -62,7 +62,7 @@ const StaffMember = () => {
                     .catch(err => {
                         console.error('Error:', err); // Add error handling
                     });
-                console.log(`Deleting member with id: ${id}`); // Add console log
+              
 
             }
         });
@@ -100,17 +100,17 @@ const StaffMember = () => {
             <table class="w-[90%] text-md bg-white shadow-md rounded mb-4">
                 <tbody>
                     <tr class="border-b">
-                        <th class="text-left p-4 px-5">id</th>
-                        <th class="text-left p-4 px-5">Email</th>
-                        <th class="text-left p-4 px-5">Role</th>
-                        <th class="text-left p-4 px-5">Actions</th>
+                        <th class="text-left p-4 px-5">ID</th>
+                        <th class="text-left p-4 px-5">USERNAME</th>
+                        <th class="text-left p-4 px-5">ROLE</th>
+                        <th class="text-left p-4 px-5">ACTIONS</th>
                         <th></th>
                     </tr>
                     {staffMemberData ?
-                        staffMemberData.map((ele) => (
+                        staffMemberData.map((ele,index) => (
                             <tr class="border-b hover:bg-orange-100 bg-gray-100">
                                 <td class="p-4 px-5">
-                                    {ele.id}
+                                    {index + +1}
                                 </td>
                                 <td class="p-4 px-5">
                                     {ele.username}

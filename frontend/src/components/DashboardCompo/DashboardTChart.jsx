@@ -52,7 +52,7 @@ const DashboardTChart = () => {
           console.log(res.status);
         }
       })
-      .catch(err => console.log(err));
+      .catch(err => console.error(err));
   }, []);
 const options = {
   responsive: true,

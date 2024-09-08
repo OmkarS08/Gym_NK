@@ -5,13 +5,6 @@ import FeeStrucutre from './FeeStrucutre';
 const Setting = () => {
 
 
-  const [passwordPage, setPasswordPage] = useState(false);
-
-
-  const handlePress = (name) => {
-
-  }
-
   return (
     <div className="flex h-screen bg-gray-100">
       <Navbar />

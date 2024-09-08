@@ -1,6 +1,6 @@
 import React from 'react'
 import axios from 'axios';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Swal from 'sweetalert2';
 import EditMember from '../EditMember/EditMember';
 import logActivity from '../../globalFunction/ActivityLog';
@@ -15,7 +15,6 @@ const TableBody = ({ data }) => {
 
   const handleEdit = (member) => {
     setCurrentMember(member);
-    console.log(member);
     setIsModalOpen(true);
   };
 
@@ -63,13 +62,12 @@ const TableBody = ({ data }) => {
 
 
             } else {
-              console.log('failed');
+              console.error('failed');
             }
           })
           .catch(err => {
             console.error('Error:', err); // Add error handling
           });
-        console.log(`Deleting member with id: ${id}`); // Add console log
 
       }
     });
@@ -94,6 +92,8 @@ const TableBody = ({ data }) => {
             <td className="px-6 py-4 whitespace-nowrap"  >{ele.name}</td>
             <td className="px-6 py-4 whitespace-nowrap">{ele.age}</td>
             <td className="px-6 py-4 whitespace-nowrap">{ele.gender}</td>
+            <td className="px-6 py-4 whitespace-nowrap">{ele.package} months</td>
+            <td className="px-6 py-4 whitespace-nowrap">{ele.startDate1}</td>
             <td className="px-6 py-4 whitespace-nowrap">{ele.endDate}</td>
             <td className="px-6 py-4 whitespace-nowrap">
               {

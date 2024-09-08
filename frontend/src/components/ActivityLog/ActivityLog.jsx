@@ -10,13 +10,12 @@ const ActivityLog = () => {
             .then(res => {
                 if (res.status === 200) {
                     setData(res.data)
-                    console.log('pass')
                 }
                 else {
                     console.log(res.status)
                 }
             })
-            .catch(err => console.log(err))
+            .catch(err => console.error(err))
     }, []
     )
 

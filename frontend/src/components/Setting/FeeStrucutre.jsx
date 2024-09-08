@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+import logActivity from '../../globalFunction/ActivityLog';
 const FeeStructure = () => {
   const [packageData, setPackageData] = useState([]);
   const [editAmount, setEditAmount] = useState({});
@@ -46,6 +46,7 @@ const FeeStructure = () => {
                 'The package amount has been updated.',
                 'success'
               );
+              logActivity(localStorage.getItem('loginId'),`PackageID  ${package_id} has been edited with ${amount}`);
               // Optionally refresh the data
               setPackageData(prevData =>
                 prevData.map(ele =>

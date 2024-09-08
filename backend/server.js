@@ -10,6 +10,7 @@ const dashboard = require('./routes/dashboardRoutes');
 const staffMember = require('./routes/staffMemberRoutes');
 const steamBath = require('./routes/steamBathRoutes');
 const package = require('./routes/packageRoutes');
+const Transaction = require('./routes/transactionRoutes')
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -23,7 +24,7 @@ app.use('/activityLog',activityLog);
 app.use('/dashboard',dashboard)
 app.use('/staffMember',staffMember);
 app.use('/steamBath',steamBath);
-// app.use('/transaction',Money);
+app.use('/transaction',Transaction);
 app.use('/package',package);
 // Start server
 app.listen(8081, () => {

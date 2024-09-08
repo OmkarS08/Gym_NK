@@ -30,7 +30,8 @@ const DashboardCompo = () => {
 
 
   return (
-    <div><div className="grid grid-cols-1 gap-4 px-2 mt-8 sm:grid-cols-3 sm:px-8">
+    <div>
+    <div className="grid grid-cols-1 gap-4 px-2 mt-8 sm:grid-cols-3 sm:px-8">
     <div className="flex items-center bg-white border rounded-sm overflow-hidden shadow">
         <div className="p-4 bg-green-400"><svg xmlns="http://www.w3.org/2000/svg" width="64px" height="64px" className="text-white" fill="none"
                 viewBox="0 0 24 24" stroke="currentColor">

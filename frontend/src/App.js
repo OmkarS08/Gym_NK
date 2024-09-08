@@ -10,6 +10,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import PrivateComponent from "./components/PrivateComponent/PrivateComponent";
 import SteamBath from "./components/Steam Bath/SteamBath";
 import Transaction from "./components/Transaction/Transaction";
+import NotFoundPage from "./components/NotFoundPage/NotFoundPage";
 
 function App() {
   return (
@@ -48,14 +49,11 @@ function App() {
             <Route path='/StaffMember' element={<PrivateComponent>
               <StaffMemberPage/>
             </PrivateComponent>}></Route>
+            <Route path='*' element={<PrivateComponent>
+              <NotFoundPage/>
+            </PrivateComponent>}></Route>
         </Routes>
-
       </BrowserRouter>
-      {/* <Login/>
-        <div className="text-3xl font-bold underline">Login  & Forgot password method </div>
-        <div>Store and view Data </div>
-        <div>Dashboard with Data Analaytic</div>
-        <div>Add a member info</div> */}
     </div>
   );
 }

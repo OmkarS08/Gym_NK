@@ -6,7 +6,6 @@ const addSteamBath = (req, res) => {
  
    // Join the members array into a single string separated by commas or any delimiter
    const membersString = members.join(', ');
-   console.log(membersString);
  
    // Insert the membersString into the database along with the date and time
    const sql = `INSERT INTO steam (Steam_members, Steam_date, Steam_time) VALUES (?, ?, ?)`;
@@ -38,7 +37,6 @@ const getSteamData = (req,res)=>{
 
 const deleteSteam = (req,res)=>{
    const id = req.params.id;
-   console.log(id);
    const sql = `UPDATE steam SET steam_delete_flag = '1' WHERE steam_id =${id}`;
    db.query(sql, (err, data) => {
        if (err) {

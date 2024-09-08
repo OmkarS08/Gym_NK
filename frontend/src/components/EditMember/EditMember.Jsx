@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState ,useEffect} from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import logActivity from '../../globalFunction/ActivityLog';
+import updateTransaction from '../../globalFunction/Updatetans';
 
 const EditMember = ({ member, handleClose }) => {
+
+
+const [packageAmount, setPackageAmount] = useState(member.transaction_package_amount)
   const [formData, setFormData] = useState({
     name: member.name,
     age: member.age,
@@ -12,9 +16,28 @@ const EditMember = ({ member, handleClose }) => {
     package: member.package ,
     startDate: member.startDate,
     payment: member.paymentMethod,
+    package_amount :member.transaction_package_amount,
+    transaction_id : member.transaction_id,
+    transaction_paid :member.transaction_amount_paid
   });
+  ;
   const oldMemberName = member.name;
-  console.log(formData)
+
+
+  useEffect(() => {
+    if (formData.package) {
+      axios.get(`http://localhost:8081/package/getPackageAmount/${formData.package}`)
+        .then(res => {
+          if (res.status === 200) {
+       
+            setPackageAmount(res.data[0].packagePrice);
+            setFormData({ ...formData, package_amount: res.data[0].packagePrice });
+       
+          }
+        })
+        .catch(err => console.error(err));
+    }
+  }, [formData.package]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,6 +58,9 @@ const EditMember = ({ member, handleClose }) => {
             timerProgressBar:"True"
           });
           handleClose(); // Close the modal after successful update
+
+          const {transaction_id,transaction_paid,package_amount,name} = formData;
+          updateTransaction(transaction_id,transaction_paid,package_amount,name)
                   
           const myreload = ()=>{
             window.location.reload()
@@ -49,6 +75,10 @@ const EditMember = ({ member, handleClose }) => {
       .catch(err => {
         console.error('Error:', err);
       });
+
+
+
+
   };
 
   return (
@@ -159,10 +189,32 @@ const EditMember = ({ member, handleClose }) => {
                 className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
               >
                 <option value="">Select Payment Method</option>
-                <option value="Cash">Cash</option>
+                <option value="Cash" >Cash</option>
                 <option value="UPI">UPI</option>
               </select>
             </div>
+            <div className="mb-4">
+          <label htmlFor="package_amount" className="block text-gray-700 font-medium mb-2">Package Amount:</label>
+          <input
+            type="number"
+            id="package_amount"
+            name="package_amount"
+            value={packageAmount}
+            onChange={handleChange}
+            className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+          />
+        </div>
+        <div className="mb-4">
+          <label htmlFor="transaction_paid" className="block text-gray-700 font-medium mb-2">Amount Paid:</label>
+          <input
+            type="number"
+            id="transaction_paid"
+            name="transaction_paid"
+            value = {formData.transaction_paid}
+            onChange={handleChange}
+            className="border border-gray-400 p-2 w-full rounded-lg focus:outline-none focus:border-blue-400"
+          />
+        </div>
           </div>
 
           {/* Submit Button */}

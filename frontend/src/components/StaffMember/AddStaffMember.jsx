@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import axios from 'axios';
+import logActivity from '../../globalFunction/ActivityLog';
 
 const AddStaffMember = ({ handleClose }) => {
   const [formData, setFormData] = useState({
@@ -21,7 +22,6 @@ const AddStaffMember = ({ handleClose }) => {
 
   const handleSubmit = async () => {
     const { name, password, confirmPassword, role } = formData;
-    console.log(formData);
 
     if (password !== confirmPassword) {
       Swal.fire({
@@ -48,6 +48,9 @@ const AddStaffMember = ({ handleClose }) => {
           timer: 2000,
           timerProgressBar: true,
         });
+
+        logActivity(localStorage.getItem('loginId'),`New Staff Member--> ${name} has been added`);
+
         handleClose();  // Close the form on success
         const myreload = () => {
           window.location.reload()

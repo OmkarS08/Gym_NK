@@ -35,7 +35,6 @@ const SteamBathForm = ({ close }) => {
             time,
         };
 
-        console.log(formData);
 
         axios.post('http://localhost:8081/steamBath/addSteamBath', formData)
             .then(res => {

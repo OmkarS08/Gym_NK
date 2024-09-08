@@ -7,7 +7,7 @@ const logActivity = async (userId, activity) => {
             user_id: userId,
             activity: activity
         });
-        console.log(response);
+        console.log(response.status);
     } catch (error) {
         console.error('Error logging activity:', error);
     }
