@@ -47,7 +47,6 @@ const SteamBatchCard = ({ data }) => {
           .catch(err => {
             console.error('Error:', err); // Add error handling
           });
-        console.log(`Deleting member with id: ${id}`); // Add console log
 
       }
     });

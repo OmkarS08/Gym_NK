@@ -38,18 +38,20 @@ const addStaffMember = (req, res) => {
     });
 };
 
-const updateStaff = (req,res) =>{
+const updateStaff = (req, res) => {
     const id = req.params.id;
-    const sql = `UPDATE login SET admin = '1' WHERE id =${id}`;
-    db.query(sql, (err, data) => {
+    const { admin } = req.body; // Get the new role (admin value) from the request body
+
+    const sql = `UPDATE login SET admin = ? WHERE id = ?`;
+    db.query(sql, [admin, id], (err, data) => {
         if (err) {
-            return res.json("Error in backedn");
-        }
-        else {
+            return res.json("Error in backend");
+        } else {
             return res.json(data);
         }
-    })
-}
+    });
+};
+
 
 const deleteStaffMember =(req,res) =>{
     const id = req.params.id;

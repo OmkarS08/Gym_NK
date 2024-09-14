@@ -69,31 +69,33 @@ const StaffMember = () => {
 
     }
 
-    const handleSelect = (id,name) =>{
-
-        axios.post(`http://localhost:8081/staffMember/updateStaff/${id}`)
-        .then(res=>{
-            if(res.status === 200)
-            {
-                Swal.fire({
-                    title: "Success!",
-                    text: "Staff Member information has been updated.",
-                    icon: "success",
-                    timer: 1500,
-                    showConfirmButton: false,
-                    timerProgressBar:"True"
-                  });
-
-                          
-                  const myreload = ()=>{
-                    window.location.reload()
-                  }
-                  setTimeout(myreload,1600)
-        
-                  logActivity(localStorage.getItem('loginId'),`Staff Member with name id ${name} has been edited`)
-            }
-        })
-    }
+    const handleSelect = (id, name, newRole) => {
+        // newRole will be either '0' (staff) or '1' (admin)
+        axios.post(`http://localhost:8081/staffMember/updateStaff/${id}`, { admin: newRole })
+            .then(res => {
+                if (res.status === 200) {
+                    Swal.fire({
+                        title: "Success!",
+                        text: "Staff Member information has been updated.",
+                        icon: "success",
+                        timer: 1500,
+                        showConfirmButton: false,
+                        timerProgressBar: true
+                    });
+    
+                    const myreload = () => {
+                        window.location.reload();
+                    };
+                    setTimeout(myreload, 1600);
+    
+                    logActivity(localStorage.getItem('loginId'), `Staff Member with name ${name} has been edited`);
+                }
+            })
+            .catch(err => {
+                console.error('Error updating staff member:', err);
+            });
+    };
+    
 
     return (
         <div class="flex items-center justify-center px-auto py-auto">
@@ -115,8 +117,12 @@ const StaffMember = () => {
                                 <td class="p-4 px-5">
                                     {ele.username}
                                 </td>
-                                <td class="p-4 px-5">
-                                    <select id="role" value={ele.admin ? 'admin' : 'staff'} onChange={()=> handleSelect(ele.id, ele.username)} >
+                                <td className="p-4 px-5">
+                                    <select
+                                        id="role"
+                                        value={ele.admin === 0 ? "staff" : "admin"}  // Map 0 to "staff" and 1 to "admin"
+                                        onChange={(e) => handleSelect(ele.id, ele.username, e.target.value === 'staff' ? 0 : 1)} // Send the new role
+                                    >
                                         <option value="staff">Staff</option>
                                         <option value="admin">Admin</option>
                                     </select>
